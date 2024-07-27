@@ -38,7 +38,7 @@ function fetchMacroValues() {
     const options = getOptions();
     const url = BASE_URL + "/api/v2/macros.json";
     const response = UrlFetchApp.fetch(url, options);
-    console.log("GET /api/v2/macros.json ："+response.getResponseCode())
+    Logger.log("GET /api/v2/macros.json ："+response.getResponseCode())
     const values = JSON.parse(response.getContentText("UTF-8"));
     return values
 }
