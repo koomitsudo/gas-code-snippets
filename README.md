@@ -1,1 +1,1 @@
-# my-code-snippets
+# gas-code-snippets
