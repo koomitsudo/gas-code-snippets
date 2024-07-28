@@ -102,23 +102,18 @@ function getValueInstruction(){
     const instructionType = qaSheet.getRange("A1").getValue();
     if (instructionType == "添削") {
         const instruction = instructionTypeSheet.getRange("B2").getValue();
-        Logger.log("添削")
         return instruction;
     } else if (instructionType == "文章作成") {
         const instruction = instructionTypeSheet.getRange("B3").getValue();
-        Logger.log("文章作成")
         return instruction;
     } else if (instructionType == "英文作成") {
         const instruction = instructionTypeSheet.getRange("B4").getValue();
-        Logger.log("英文作成")
         return instruction;
     } else if (instructionType == "外国語翻訳") {
         const instruction = instructionTypeSheet.getRange("B5").getValue();
-        Logger.log("外国語翻訳")
         return instruction;
     } else if (instructionType == "一般質問") {
         const instruction = instructionTypeSheet.getRange("B6").getValue();
-        Logger.log("一般質問")
         return instruction;
     } else if (instructionType == "読解") {
         const instruction = instructionTypeSheet.getRange("B7").getValue();
