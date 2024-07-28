@@ -57,44 +57,49 @@ function main() {
     }
 }
 
-
+// 入力NGのURLリスト
 function getBlacklistedUrls() {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('black_list');
-    const urls = sheet.getRange('A2:A').getValues().flat().filter(String);
+    const blackListSheet = ss.getSheetByName("black_list");
+    const urls = blackListSheet.getRange('A2:A').getValues().flat().filter(String);
     return urls;
 }
 
 function createUrlRegex(urls) {
+    // 各URLを正規表現の特殊文字からエスケープ
     const escapedUrls = urls.map(url => url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    // エスケープされたURLをパイプ結合してどのURLにもマッチ可能にする
     return new RegExp('\\b(' + escapedUrls.join('|') + ')\\b', 'i');
 }
 
 function validateInput(inputText) {
+    // APIキーやトークン検出用
+    const apiKeyRegex = /[A-Za-z0-9_\-]{20,64}/g;
+    // クレジットカード番号検出用
+    const creditCardRegex = /\b(?:\d{4}[-\s]?){3,4}\d{1,4}\b/g;
+    // パスワード検出用（8文字以上、英数字と特殊文字を含む）
+    const passwordRegex = /\b(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}\b/g;
+
     if (apiKeyRegex.test(inputText)) {
         SpreadsheetApp.getUi().alert("APIキーらしき文字列を検知したので確認して");
         return false;
     }
-
     if (creditCardRegex.test(inputText)) {
         SpreadsheetApp.getUi().alert("カード番号らしき文字列を検知したので確認して");
         return false;
     }
-
     if (passwordRegex.test(inputText)) {
         SpreadsheetApp.getUi().alert("パスワードらしき文字列を検知したので確認して");
         return false;
     }
-
+    // NGのURLリスト
     const blacklistedUrls = getBlacklistedUrls();
     const urlRegex = createUrlRegex(blacklistedUrls);
     if (urlRegex.test(inputText)) {
         SpreadsheetApp.getUi().alert("NGのURLを検知したので確認して");
         return false;
     }
-
     return true; // すべてのチェックをパスした場合
 }
-
 
 // 各種依頼
 function getValueInstruction(){
