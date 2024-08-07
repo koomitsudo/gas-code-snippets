@@ -1,10 +1,8 @@
 function convertStyle() { 
     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('修正'); 
-
     // 修正前の文章の取得 
     const originalText = sheet.getRange('A2').getValue(); 
     const convertedText = convertToPlainStyle(originalText); 
-
     sheet.getRange('B2').setValue(convertedText); 
 } 
 
@@ -41,7 +39,6 @@ function convertToPlainStyle(text) {
         { pattern: /います。/g, replacement: 'いる。' }, 
         { pattern: /いませんか。/g, replacement: 'いないか。' }, 
         { pattern: /しましょうか。/g, replacement: 'しようか。' } 
-
     ]; 
 
     // テキストに対して変換を適用 
@@ -58,6 +55,5 @@ function convertToPlainStyle(text) {
     newText = newText.replace(/しているる。/g, 'している。'); 
     newText = newText.replace(/られ。/g, 'られる。'); 
     newText = newText.replace(/られてい。/g, 'られている。'); 
-
     return newText; 
 }
